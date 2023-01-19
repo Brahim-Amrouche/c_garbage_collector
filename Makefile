@@ -31,7 +31,7 @@ GNL_OBJS = ${patsubst %.c,%.o,$(GNL_SRCS)}
 
 CGC_OBJS = ${patsubst %.c,%.o,$(GCG_SRCS)}
 
-OBJS = $(LIBFT_OBJS) $(LIBFT_B_OBJS) $(PRINTF_OBJS) $(GNL_OBJS)
+OBJS = $(LIBFT_OBJS) $(LIBFT_B_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(CGC_OBJS)
 
 %.o : %.c
 	${GCC} ${FLAGS} -c $^ -o $@

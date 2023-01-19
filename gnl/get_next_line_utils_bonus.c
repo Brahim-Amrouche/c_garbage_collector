@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bamrouch <bamrouch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 01:07:39 by bamrouch          #+#    #+#             */
-/*   Updated: 2022/10/30 01:11:00 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:43:24 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(char *s)
+size_t	ft_gnl_strlen(char *s)
 {
 	size_t	i;
 
@@ -38,16 +38,16 @@ void	*ft_calloc(size_t count, size_t size)
 	return (res);
 }
 
-size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
+size_t	ft_gnl_strlcat(char *dst, char *src, size_t dstsize)
 {
 	size_t	i;
 	size_t	src_len;
 	size_t	dst_len;
 
-	src_len = ft_strlen(src);
+	src_len = ft_gnl_strlen(src);
 	if (!dst && !dstsize)
 		return (src_len);
-	dst_len = ft_strlen(dst);
+	dst_len = ft_gnl_strlen(dst);
 	i = 0;
 	if (dstsize <= dst_len || dstsize == 0)
 		return (src_len + dstsize);

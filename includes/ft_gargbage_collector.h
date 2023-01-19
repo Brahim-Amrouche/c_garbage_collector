@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:19:27 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/01/18 21:55:55 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:24:54 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 #include "get_next_line_bonus.h"
 #include "libft.h"
 
-// struct containing all memory possible parameters
-// t_list *node
-// unint64_t scope
-// void *ref_pointer
+typedef struct s_mem_manage_params
+{
+    t_list *node;
+    uint64_t scope;
+    void *ref_pointer;
+} t_mem_manage_params;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 01:12:23 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/01/15 16:42:31 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:43:33 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ char	*ft_strjoin_buffer_to_line(char **line, char *buffer)
 
 	if (!line || !(*line) || !buffer)
 		return (NULL);
-	line_len = ft_strlen(*line) + 1;
-	total_len = line_len + ft_strlen(buffer);
+	line_len = ft_gnl_strlen(*line) + 1;
+	total_len = line_len + ft_gnl_strlen(buffer);
 	res = (char *)ft_calloc(total_len, sizeof(char));
 	if (!res)
 	{
 		free((*line));
 		return (NULL);
 	}
-	ft_strlcat(res, *line, line_len);
+	ft_gnl_strlcat(res, *line, line_len);
 	free((*line));
-	ft_strlcat(res, buffer, total_len);
+	ft_gnl_strlcat(res, buffer, total_len);
 	return (res);
 }
 
@@ -45,7 +45,7 @@ char	*ft_cut_line(char *line, ssize_t len)
 		free(line);
 		return (NULL);
 	}
-	ft_strlcat(res, line, len + 1);
+	ft_gnl_strlcat(res, line, len + 1);
 	i = 0;
 	while (line[len + i])
 	{
@@ -115,7 +115,7 @@ char	*get_next_line(int fd)
 	free(buffer);
 	if (ft_strchr_index(res, '\n') == -1)
 		line[fd] = NULL;
-	if (!res || ft_strlen(res) == 0)
+	if (!res || ft_gnl_strlen(res) == 0)
 	{
 		if (res)
 			free(res);
