@@ -6,120 +6,92 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:14:34 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/01/19 20:20:19 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:50:12 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_gargbage_collector.h"
+#include "ft_garbage_collector.h"
 
-t_list	*memory_root(void)
+// returns pointer towards the memory management root node
+t_list	**memory_root(void)
 {
-	static t_list *memory_root;
+	static t_list	*memory_root;
 
-	return memory_root;
+	return (&memory_root);
 }
 
-// finds a reference pointer this case is very important for included pointers for example **p includes *p so they need to be related
-t_list	*mem_find_ref_pointers(t_list *memory_scope, void *ref_pointer)
+// adds an address to an existing scope 
+//or creates a new scope then adds the memory to it
+void	mem_manage_add(t_mem_manage_params params)
 {
-	t_list *mem_scope_inner_nodes;
-	t_list *current_node;
-	
-	mem_scope_inner_nodes = memory_scope->content;
-	mem_scope_inner_nodes = mem_scope_inner_nodes->next;
-	while (mem_scope_inner_nodes)
-	{
-		current_node = mem_scope_inner_nodes->content;
-		while (current_node && current_node->content != ref_pointer)
-			current_node = current_node->next;
-		if (!current_node)
-			mem_scope_inner_nodes = mem_scope_inner_nodes->next;
-		return mem_scope_inner_nodes;
-	}
-	return memory_scope;
-}
+	t_list	*memory_scopes;
+	t_list	*scope_node;
 
-// use only with basic data types dont expected it to free inner mallocs
-t_list *create_node_with_content(void *content)
-{
-	t_list *new_node;
-
-	new_node = ft_lstnew(content);
-	if (!new_node)
-	{
-		free(content);
-		return NULL;
-	}
-	return new_node;
-}
-
-t_list	*mem_add_new_scope(uint64_t scope)
-{
-	uint64_t *key;
-	t_list *scope_first_node;
-	t_list *scope_node;
-	t_list *mem_root;
-
-	key = malloc(sizeof(uint64_t));
-	if (!key)
-		return NULL;
-	*key = scope;
-	scope_first_node = create_node_with_content(key);
-	if (!scope_first_node)
-		return NULL;
-	scope_node = ft_lstnew(scope_first_node);
-	if (!scope)
-	{
-		ft_lstclear(&scope_first_node, free);
-		return NULL;
-	}
-	mem_root = memory_root();
-	ft_lstadd_back(&mem_root, scope_node);
-	return scope_node;
-}
-
-void	mem_add_node_to_scope(t_mem_manage_params params)
-{
-	t_list		*memory_scopes;
-	uint64_t	memory_scope_key;
-	t_list		*scope_node;
-
-	memory_scopes = memory_root();
-	while (memory_scopes)
-	{
-		memory_scope_key = *(uint64_t *)((t_list *) memory_scopes->content)->content;
-		if (memory_scope_key == params.scope)
-			break;
-		memory_scopes = memory_scopes->next;
-	}
-	if(!memory_scopes)
+	memory_scopes = mem_find_scope(params.scope);
+	if (!memory_scopes)
 		memory_scopes = mem_add_new_scope(params.scope);
 	if (params.ref_pointer)
-		memory_scopes = mem_find_ref_pointers(memory_scopes, params.ref_pointer);
+		memory_scopes = mem_find_ref_pointers(memory_scopes,
+				params.ref_pointer);
+	else
+		params.node = create_node_with_content(params.node);
+	if (!params.node)
+		return ;
 	scope_node = memory_scopes->content;
 	ft_lstadd_back(&scope_node, params.node);
 }
 
-void	*ft_malloc(uintptr_t size, t_mem_manage_params params, void (*f)(t_mem_manage_params))
+// moves a memory ref from a scope to another
+void	mem_manage_move(t_mem_manage_params params)
+{
+	t_list	*memory_scope;
+	t_list	*move_node;
+	t_list	*new_scope;
+
+	if (params.scope == 0 || params.move_scope == 0)
+		return ;
+	memory_scope = mem_find_scope(params.scope);
+	move_node = mem_find_ref_pointers(memory_scope, params.ref_pointer);
+	if (move_node == memory_scope)
+		return ;
+	mem_cut_node(memory_scope, move_node);
+	new_scope = mem_find_scope(params.move_scope)->content;
+	ft_lstadd_back(&new_scope, move_node);
+}
+
+// generate a t_mem_params object : parameters goes as follows 
+// uint64_t scope, void *ref_pointer, uint64_t move_scope
+t_mem_manage_params	mem_pass_params(uint64_t scope, ...)
+{
+	va_list				params;
+	t_mem_manage_params	res;
+
+	va_start(params, scope);
+	res.node = NULL;
+	res.scope = scope;
+	res.ref_pointer = va_arg(params, void *);
+	res.move_scope = va_arg(params, uint64_t);
+	va_end(params);
+	return (res);
+}
+
+void	*ft_malloc(uint64_t size, t_mem_manage_params params)
 {
 	void	*temp;
 	t_list	*temp_l;
 
-	if (!size)
-		return NULL;
+	if (!size || params.scope == 0)
+		return (NULL);
 	temp = malloc(size);
 	if (!temp)
-		return NULL;
+		return (NULL);
 	temp_l = create_node_with_content(temp);
-	if (!temp)
-		return NULL;
-	f(params);
-	return temp;
-}
-
-
-// time to test adding nodes and scopes and seeing if the structures are safe
-int main(void)
-{
-	
+	if (!temp_l)
+	{
+		free(temp);
+		return (NULL);
+	}
+	params.node = temp_l;
+	mem_manage_add(params);
+	return (temp);
 }
