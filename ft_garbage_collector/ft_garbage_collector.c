@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:14:34 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/01/21 18:05:45 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/01/21 19:54:49 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_list	**memory_root(void)
 	return (&memory_root);
 }
 
-// adds an address to an existing scope 
+// adds an address to an existing scope
 //or creates a new scope then adds the memory to it
-void	mem_manage_add(t_mem_manage_params params)
+t_boolean	mem_manage_add(t_mem_manage_params params)
 {
 	t_list	*memory_scopes;
 	t_list	*scope_node;
@@ -31,14 +31,17 @@ void	mem_manage_add(t_mem_manage_params params)
 	if (!memory_scopes)
 		memory_scopes = mem_add_new_scope(params.scope);
 	if (params.ref_pointer)
+	{
 		memory_scopes = mem_find_ref_pointers(memory_scopes,
 				params.ref_pointer);
+	}
 	else
 		params.node = create_node_with_content(params.node);
 	if (!params.node)
-		return ;
+		return (FALSE);
 	scope_node = memory_scopes->content;
 	ft_lstadd_back(&scope_node, params.node);
+	return (TRUE);
 }
 
 // moves a memory ref from a scope to another
@@ -59,36 +62,20 @@ void	mem_manage_move(t_mem_manage_params params)
 	ft_lstadd_back(&new_scope, move_node);
 }
 
-// generate a t_mem_params object : parameters goes as follows 
-// uint64_t scope, void *ref_pointer, uint64_t move_scope
-t_mem_manage_params	mem_pass_params(uint64_t scope, ...)
-{
-	va_list				params;
-	t_mem_manage_params	res;
-
-	va_start(params, scope);
-	res.node = NULL;
-	res.scope = scope;
-	res.ref_pointer = va_arg(params, void *);
-	res.move_scope = va_arg(params, uint64_t);
-	va_end(params);
-	return (res);
-}
-
 void	ft_free(uint64_t scope, t_boolean purge_all)
 {
-	t_list *mem_root;
-	t_list *prev_scope;
-	t_list *temp_scope;
+	t_list	*mem_root;
+	t_list	*prev_scope;
+	t_list	*temp_scope;
 
 	if (purge_all)
-		return mem_purge_memory();
+		return (mem_purge_memory());
 	mem_root = *(memory_root());
 	prev_scope = NULL;
 	while (mem_root)
 	{
 		temp_scope = mem_root->content;
- 		if (*(uint64_t *)temp_scope->content == scope)
+		if (*(uint64_t *)temp_scope->content == scope)
 		{
 			mem_free_scope(temp_scope);
 			if (!prev_scope)
@@ -96,7 +83,7 @@ void	ft_free(uint64_t scope, t_boolean purge_all)
 			else
 				prev_scope->next = mem_root->next;
 			free(mem_root);
-			return;
+			return ;
 		}
 		prev_scope = mem_root;
 		mem_root = mem_root->next;
@@ -112,14 +99,15 @@ void	*ft_malloc(uint64_t size, t_mem_manage_params params)
 		return (NULL);
 	temp = malloc(size);
 	if (!temp)
-		return (NULL);
+		return (ft_free(0, TRUE), NULL);
 	temp_l = create_node_with_content(temp);
 	if (!temp_l)
 	{
 		free(temp);
-		return (NULL);
+		return (ft_free(0, TRUE), NULL);
 	}
 	params.node = temp_l;
-	mem_manage_add(params);
-	return (temp);
+	if (mem_manage_add(params))
+		return (temp);
+	return (NULL);
 }

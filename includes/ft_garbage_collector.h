@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:19:27 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/01/21 18:08:45 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/01/21 19:52:46 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void				mem_manage_move(t_mem_manage_params params);
 
 // helpers
 t_list				*create_node_with_content(void *content);
-void				*ft_print_memory(void);
+void				ft_print_memory(void);
 t_list				*mem_add_new_scope(uint64_t scope);
 t_list				*mem_find_ref_pointers(t_list *memory_scope,
 						void *ref_pointer);
@@ -42,6 +42,6 @@ void				mem_purge_memory(void);
 
 // mem management functions;
 t_mem_manage_params	mem_pass_params(uint64_t scope, ...);
-void				mem_manage_add(t_mem_manage_params params);
+t_boolean			mem_manage_add(t_mem_manage_params params);
 
 #endif
