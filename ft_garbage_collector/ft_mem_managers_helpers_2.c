@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 17:19:30 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/01/20 18:34:06 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/01/21 17:28:10 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,39 @@ void	mem_cut_node(t_list *memory_scope, t_list *to_cut_node)
 		current_node = current_node->next;
 	}
 	prev_node->next = current_node->next;
+}
+
+void	mem_free_scope(void *scope_lst)
+{
+	t_list *mem_scope;
+	t_list *temp_node;
+	
+	mem_scope = ((t_list *) scope_lst)->next;
+	temp_node = scope_lst;
+	free(temp_node->content);
+	free(temp_node);
+	while (mem_scope)
+	{
+		temp_node = mem_scope->content;
+		ft_lstclear(&temp_node, free);
+		temp_node = mem_scope;
+		free(temp_node);
+		mem_scope = mem_scope->next;
+	}
+}
+
+void	mem_purge_memory(void)
+{
+	t_list *mem_root;
+	t_list *next_scope;
+
+	mem_root = *(memory_root());
+	while (mem_root)
+	{
+		mem_free_scope(mem_root->content);
+		next_scope = mem_root->next;
+		free(mem_root);
+		mem_root = next_scope;
+	}
+	*(memory_root()) = NULL;
 }

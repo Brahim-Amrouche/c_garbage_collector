@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:14:34 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/01/20 18:50:12 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/01/21 18:05:45 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,34 @@ t_mem_manage_params	mem_pass_params(uint64_t scope, ...)
 	res.move_scope = va_arg(params, uint64_t);
 	va_end(params);
 	return (res);
+}
+
+void	ft_free(uint64_t scope, t_boolean purge_all)
+{
+	t_list *mem_root;
+	t_list *prev_scope;
+	t_list *temp_scope;
+
+	if (purge_all)
+		return mem_purge_memory();
+	mem_root = *(memory_root());
+	prev_scope = NULL;
+	while (mem_root)
+	{
+		temp_scope = mem_root->content;
+ 		if (*(uint64_t *)temp_scope->content == scope)
+		{
+			mem_free_scope(temp_scope);
+			if (!prev_scope)
+				*(memory_root()) = mem_root->next;
+			else
+				prev_scope->next = mem_root->next;
+			free(mem_root);
+			return;
+		}
+		prev_scope = mem_root;
+		mem_root = mem_root->next;
+	}
 }
 
 void	*ft_malloc(uint64_t size, t_mem_manage_params params)
