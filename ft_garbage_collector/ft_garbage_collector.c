@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:14:34 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/01/21 19:54:49 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:52:03 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ void	mem_manage_move(t_mem_manage_params params)
 	if (move_node == memory_scope)
 		return ;
 	mem_cut_node(memory_scope, move_node);
+	move_node->next = NULL;
 	new_scope = mem_find_scope(params.move_scope)->content;
 	ft_lstadd_back(&new_scope, move_node);
+	if (!((t_list *)memory_scope->content)->next)
+		ft_free(params.scope, FALSE);
 }
 
 void	ft_free(uint64_t scope, t_boolean purge_all)
