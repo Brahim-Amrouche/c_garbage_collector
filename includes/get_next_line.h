@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:20:27 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/22 18:08:34 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/02/22 21:00:27 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,14 @@
 # include <unistd.h>
 # include <stddef.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 100
 # endif
+# define GNL_SCOPE 100
 
+size_t	gnl_strlen(char *str);
+size_t	gnl_strlcat(char *dst, char *src, size_t dstsize);
+void	gnl_strjoin(char **line, char *buffer);
+char	*gnl_substr(char *s, unsigned int start, size_t len);
+char	*get_next_line(int fd);
 
 #endif

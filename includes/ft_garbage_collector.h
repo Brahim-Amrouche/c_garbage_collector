@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:19:27 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/22 14:42:12 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:51:24 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_GARBAGE_COLLECTOR_H
 # include "ft_printf.h"
 # include "get_next_line.h"
-#include "get_next_line_bonus.h"
+// #include "get_next_line_bonus.h"
 # include "libft.h"
 
 typedef struct s_mem_manage_params

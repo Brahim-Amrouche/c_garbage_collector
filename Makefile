@@ -8,16 +8,16 @@ PRINTF_SRCS = ./ft_printf/ft_printf.c \
 	./ft_printf/ft_converters_1.c \
 	./ft_printf/ft_flags_applier.c
 
-GNL_SRCS = ./gnl/get_next_line.c
+GNL_SRCS = ./gnl/get_next_line.c ./gnl/get_next_line_utils.c
 
 GCG_SRCS = ./ft_garbage_collector/ft_mem_managers_helpers_2.c ./ft_garbage_collector/ft_mem_managers_helpers_1.c \
 	./ft_garbage_collector/ft_garbage_collector.c      ./ft_garbage_collector/ft_mem_managers_helpers3.c
 
 INCLUDES = -I./includes
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address $(INCLUDES)
+FLAGS = -Wall -Wextra -Werror $(INCLUDES)
 
-GCC = cc
+GCC = @cc
 
 NAME = libft.a
 
@@ -39,12 +39,12 @@ OBJS = $(LIBFT_OBJS) $(LIBFT_B_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(CGC_OBJS)
 all : ${NAME}
 
 ${NAME} :  ${OBJS}
-	ar -rcs $@ ${OBJS}
+	@ar -rcs $@ ${OBJS}
 
 clean :
-	rm -f ${OBJS} 
+	@rm -f ${OBJS} 
 
 fclean : clean
-	rm -f ${NAME}
+	@rm -f ${NAME}
 
 re : fclean	all
