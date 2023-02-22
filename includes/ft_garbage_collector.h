@@ -6,14 +6,15 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:19:27 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/21 18:55:35 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:42:12 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_GARBAGE_COLLECTOR_H
 # define FT_GARBAGE_COLLECTOR_H
 # include "ft_printf.h"
-# include "get_next_line_bonus.h"
+# include "get_next_line.h"
+#include "get_next_line_bonus.h"
 # include "libft.h"
 
 typedef struct s_mem_manage_params
@@ -26,7 +27,9 @@ typedef struct s_mem_manage_params
 
 void				*ft_malloc(uint64_t size, t_mem_manage_params params);
 void				ft_free(uint64_t scope, t_boolean purge_all);
-void				mem_manage_move(t_mem_manage_params params);
+void				ft_free_node(uint64_t scope, void *del_mem);
+void				mem_move(t_mem_manage_params params);
+void				mem_scope_merge(uint64_t scope, uint64_t merge_scope);
 
 // helpers
 t_list				*create_node_with_content(void *content);
@@ -39,7 +42,6 @@ void				mem_cut_node(t_list *memory_scope, t_list *to_cut_node);
 t_list				**memory_root(void);
 void				mem_free_scope(void *scope_lst);
 void				mem_purge_memory(void);
-void				ft_free_node(uint64_t scope, void *del_mem);
 
 // mem management functions;
 t_mem_manage_params	mem_pass_params(uint64_t scope, ...);
