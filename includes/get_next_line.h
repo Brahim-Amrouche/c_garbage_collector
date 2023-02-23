@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:20:27 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/22 21:00:27 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:32:46 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <unistd.h>
 # include <stddef.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 10
 # endif
 # define GNL_SCOPE 100
 

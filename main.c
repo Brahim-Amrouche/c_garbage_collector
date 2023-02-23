@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 18:52:44 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/22 20:59:49 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:26:29 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ int	main(void)
 
 	char *p;
 	while ((p = get_next_line(fd)))
-		ft_printf("|%s|\n",p);
-	ft_print_memory();
+		ft_printf("%s",p);
 }

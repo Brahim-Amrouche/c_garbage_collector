@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:53:38 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/22 21:06:41 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:36:11 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	*gnl_helper(int fd, char **res)
 
 char	*get_next_line(int fd)
 {
-	static char	*keeper[10240];
+	static char	*keeper[10241];
 
 	if (fd < 0 || fd > 10240 || BUFFER_SIZE <= 0)
 		return (NULL);
