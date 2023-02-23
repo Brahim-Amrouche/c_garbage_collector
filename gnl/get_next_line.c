@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:53:38 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/23 12:36:11 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:40:05 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*gnl_helper(int fd, char **res)
 	read_count = read(fd, buffer, BUFFER_SIZE);
 	if (read_count == -1)
 	{
-		ft_free_node(2, *res);
+		ft_free_node(GNL_SCOPE, *res);
 		*res = NULL;
 		return (*res);
 	}
