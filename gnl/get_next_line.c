@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:53:38 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/23 12:40:05 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:22:27 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,11 @@ static char	*gnl_helper(int fd, char **res)
 char	*get_next_line(int fd)
 {
 	static char	*keeper[10241];
+	char		*line;
 
 	if (fd < 0 || fd > 10240 || BUFFER_SIZE <= 0)
 		return (NULL);
-	return (gnl_helper(fd, &(keeper[fd])));
+	line = gnl_helper(fd, &(keeper[fd]));
+	mem_move((t_mem_param){NULL, GNL_SCOPE, line, MAIN_SCOPE});
+	return (line);
 }

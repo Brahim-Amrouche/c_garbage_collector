@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 17:19:30 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/22 18:41:06 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:02:57 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,18 @@ void	mem_purge_memory(void)
 	*(memory_root()) = NULL;
 }
 
-// generate a t_mem_params object : parameters goes as follows
-// uint64_t scope, void *ref_pointer, uint64_t move_scope
-t_mem_manage_params	mem_pass_params(uint64_t scope, ...)
-{
-	va_list				params;
-	t_mem_manage_params	res;
+// // generate a t_mem_params object : parameters goes as follows
+// // uint64_t scope, void *ref_pointer, uint64_t move_scope
+// t_mem_param	mem_pass_params(uint64_t scope, ...)
+// {
+// 	va_list				params;
+// 	t_mem_param	res;
 
-	va_start(params, scope);
-	res.node = NULL;
-	res.scope = scope;
-	res.ref_pointer = va_arg(params, void *);
-	res.move_scope = va_arg(params, uint64_t);
-	va_end(params);
-	return (res);
-}
+// 	va_start(params, scope);
+// 	res.node = NULL;
+// 	res.scope = scope;
+// 	res.ref_pointer = va_arg(params, void *);
+// 	res.move_scope = va_arg(params, uint64_t);
+// 	va_end(params);
+// 	return (res);
+// }

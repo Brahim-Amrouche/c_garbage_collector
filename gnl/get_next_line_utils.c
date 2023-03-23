@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 20:42:07 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/22 21:03:17 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:59:00 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	gnl_strjoin(char **line, char *buffer)
 	s1_len = gnl_strlen(old_line);
 	total_len = s1_len + gnl_strlen(buffer);
 	*line = ft_malloc((total_len + 1) * sizeof(char),
-			(t_mem_manage_params){NULL, GNL_SCOPE, NULL, 0});
+			(t_mem_param){NULL, GNL_SCOPE, NULL, 0});
 	if (!(*line))
 		return ;
 	*line[0] = 0;
@@ -78,7 +78,7 @@ char	*gnl_substr(char *s, unsigned int start, size_t len)
 		len = 0;
 	if (len >= s_len - start)
 		len = s_len - start;
-	res = ft_malloc((len + 1) * sizeof(char), (t_mem_manage_params){NULL,
+	res = ft_malloc((len + 1) * sizeof(char), (t_mem_param){NULL,
 			GNL_SCOPE, NULL, 0});
 	if (!res)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:14:34 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/02/22 19:13:02 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:59:00 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_list	**memory_root(void)
 
 // adds an address to an existing scope
 //or creates a new scope then adds the memory to it
-t_boolean	mem_manage_add(t_mem_manage_params params)
+t_boolean	mem_manage_add(t_mem_param params)
 {
 	t_list	*memory_scopes;
 	t_list	*scope_node;
@@ -45,7 +45,7 @@ t_boolean	mem_manage_add(t_mem_manage_params params)
 }
 
 // moves a memory ref from a scope to another
-void	mem_move(t_mem_manage_params params)
+void	mem_move(t_mem_param params)
 {
 	t_list	*memory_scope;
 	t_list	*move_node;
@@ -97,7 +97,7 @@ void	ft_free(uint64_t scope, t_boolean purge_all)
 	}
 }
 
-void	*ft_malloc(uint64_t size, t_mem_manage_params params)
+void	*ft_malloc(uint64_t size, t_mem_param params)
 {
 	void	*temp;
 	t_list	*temp_l;
