@@ -33,6 +33,11 @@ CGC_OBJS = ${patsubst %.c,%.o,$(GCG_SRCS)}
 
 OBJS = $(LIBFT_OBJS) $(LIBFT_B_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(CGC_OBJS)
 
+WHITE_TEXT = \033[1;37m
+RED_TEXT = \033[0;31m
+NC_TEXT = \033[0m
+GREEN_TEXT= \033[0;32m
+
 %.o : %.c
 	${GCC} ${FLAGS} -c $^ -o $@
 
@@ -40,11 +45,19 @@ all : ${NAME}
 
 ${NAME} :  ${OBJS}
 	@ar -rcs $@ ${OBJS}
+	@echo "$(GREEN_TEXT)	Success : Libft Archived Successfully" 
+	@echo "$(NC_TEXT)"
 
 clean :
+	@echo "$(RED_TEXT)Cleaning Libft ObjectFiles"
 	@rm -f ${OBJS} 
+	@echo "$(NC_TEXT)"
 
 fclean : clean
+	@echo "$(RED_TEXT)Cleaning Libft Archive"
 	@rm -f ${NAME}
+	@echo "$(NC_TEXT)"
 
 re : fclean	all
+
+.PHONY : re clean fclean all
