@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:14:34 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/03/23 15:06:46 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/04/03 03:04:50 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ void	*ft_malloc(uint64_t size, t_mem_param params)
 
 	if (!size || params.scope == 0)
 		return (NULL);
-	if (params.ref_pointer)
-		temp = params.ref_pointer;
+	if (params.node)
+		temp = params.node;
 	else
 	{
 		temp = malloc(size);
