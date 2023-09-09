@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 17:19:30 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/03/23 12:02:57 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/09/09 14:41:26 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	mem_free_scope(void *scope_lst)
 		temp_node = mem_scope->content;
 		ft_lstclear(&temp_node, free);
 		temp_node = mem_scope;
-		free(temp_node);
 		mem_scope = mem_scope->next;
+		free(temp_node);
 	}
 }
 
